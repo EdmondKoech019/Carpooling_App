@@ -1,0 +1,55 @@
+import 'package:flutter/material.dart';
+
+class TextFiledWidget extends StatelessWidget {
+  const TextFiledWidget(
+      {Key? key,
+      required this.controller,
+      required this.hintText,
+      required this.icon,
+      this.obscureText = false,
+      required this.errorText,
+      required this.keyboardType})
+      : super(key: key);
+
+  final TextEditingController controller;
+
+  final String hintText;
+  final IconButton icon;
+  final TextInputType keyboardType;
+  final bool obscureText;
+  final String?errorText;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      keyboardType: keyboardType,
+      obscureText: obscureText,
+      textDirection: TextDirection.rtl,
+      controller: controller,
+      obscuringCharacter: '*',
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+        hintText: hintText,
+        errorText: errorText,
+        hintTextDirection: TextDirection.rtl,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: Colors.black38, width: 1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: Colors.black38, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+        ),
+        prefixIcon: icon,
+      ),
+    );
+  }
+}
