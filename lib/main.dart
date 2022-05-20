@@ -2,13 +2,16 @@ import 'package:carpooling_app/Screens/Auth/sign_in.dart';
 import 'package:carpooling_app/Screens/Auth/sign_up.dart';
 import 'package:carpooling_app/Screens/StartScreen/splashscreen.dart';
 import 'package:carpooling_app/Screens/home.dart';
+import 'package:carpooling_app/SharedPrefrances/sherdprefrances.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+
   await Firebase.initializeApp();
+  await ShController().SharedInstance();
 
   runApp(const CarpoolingApp());
 }

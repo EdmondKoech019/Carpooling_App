@@ -1,6 +1,7 @@
-import 'package:carpooling_app/Controller/authfirebase.dart';
+import 'package:carpooling_app/Controller/Firebase/authfirebase.dart';
 import 'package:carpooling_app/Mixin/Helper.dart';
 import 'package:carpooling_app/Model/messegeauth_firebase.dart';
+import 'package:carpooling_app/SharedPrefrances/sherdprefrances.dart';
 import 'package:carpooling_app/Widget/textfiled.dart';
 import 'package:flutter/material.dart';
 
@@ -122,6 +123,7 @@ class _SignInState extends State<SignIn> with Helper {
       showSnackBare(context,
           message: messege.messege, visibility: messege.error);
       if (messege.error == false) {
+        ShController().save(email: _emailEditingController.text);
         Navigator.pushReplacementNamed(context, '/HomeScreen');
       }
     }
