@@ -217,7 +217,7 @@ class _SignUpState extends State<SignUp> with Helper {
       showSnackBare(context,
           message: message.messege, visibility: message.error);
       if (message.error == false) {
-        Navigator.pushReplacementNamed(context, '/SignIn_Screen');
+        Navigator.pushReplacementNamed(context, '/OptionStart_Screen');
       }
     }
   }

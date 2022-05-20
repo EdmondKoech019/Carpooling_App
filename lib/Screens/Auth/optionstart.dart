@@ -1,3 +1,5 @@
+import 'package:carpooling_app/Widget/Button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OptionStart extends StatefulWidget {
@@ -11,58 +13,56 @@ class _OptionStartState extends State<OptionStart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffB40000),
-      body: Stack(
-        children: [
-          Center(
-              child: Image.asset(
-            'images/logo.png',
-            color: Colors.white.withAlpha(80),
-            fit: BoxFit.cover,
-            width: 300,
-            height: 300,
-          )),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  'سائق',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  minimumSize: const Size(120, 50),
-                ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: Text(
+                'اختر الطريقة التي ستدخل بها للتطبيق',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 150,
+            ),
+            Button(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/HomeScreen');
+                },
+                text: 'سائق'),
+            const Align(
+              alignment: AlignmentDirectional.center,
+              child: Text(
+                '\t                        تمكنك خاصية دخول التطبيق كسائق اضافة رحلات,'
+                '\nوالذهاب للرحلة مع الأشخاص التي تختارهم حسب رغبتك من نفس مدينتك \n'
+                'وتمكن الراكبين الذين تمت اضافتك معهم من تحديد موقعك والتواصل معك \n'
+                '\t                   هيا انطلق في رحلتك مع أصدقاءك المشاركين بنفس رحلتك',
+                style: TextStyle(color: Colors.black54, fontSize: 14),
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  'راكب',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  minimumSize: const Size(120, 50),
-                ),
+            ),
+            Button(onPressed: () {}, text: 'راكب'),
+            const Align(
+              alignment: AlignmentDirectional.center,
+              child: Text(
+                '\t                        تمكنك خاصية دخول التطبيق كراكب الدخول الى رحلات'
+                '\nوالذهاب للرحلة مع الأشخاص التي تختارهم حسب رغبتك من نفس مدينتك \n'
+                'وتمكن السائقين الذين تمت اضافتك معهم من تحديد موقعك والتواصل معك \n'
+                '\t                   هيا انطلق في رحلتك مع أصدقاءك المشاركين بنفس رحلتك',
+                style: TextStyle(color: Colors.black54, fontSize: 14),
               ),
-              const Divider(
-                color: Colors.transparent,
-              ),
-            ],
-          )
-        ],
+            ),
+            const Divider(
+              color: Colors.transparent,
+            ),
+          ],
+        ),
       ),
     );
   }

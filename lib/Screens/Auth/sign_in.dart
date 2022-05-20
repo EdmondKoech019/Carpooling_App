@@ -124,7 +124,7 @@ class _SignInState extends State<SignIn> with Helper {
           message: messege.messege, visibility: messege.error);
       if (messege.error == false) {
         ShController().save(email: _emailEditingController.text);
-        Navigator.pushReplacementNamed(context, '/HomeScreen');
+        Navigator.pushReplacementNamed(context, '/OptionStart_Screen');
       }
     }
   }

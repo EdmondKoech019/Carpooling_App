@@ -7,6 +7,9 @@ class TextFiledWidget extends StatelessWidget {
       required this.hintText,
       required this.icon,
       this.obscureText = false,
+      this.prificxText,
+      this.onTap,
+      this.colorHint,
       required this.errorText,
       required this.keyboardType})
       : super(key: key);
@@ -17,7 +20,10 @@ class TextFiledWidget extends StatelessWidget {
   final IconButton icon;
   final TextInputType keyboardType;
   final bool obscureText;
-  final String?errorText;
+  final String? errorText;
+  final String? prificxText;
+  final Function()? onTap;
+  final Color? colorHint;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +33,11 @@ class TextFiledWidget extends StatelessWidget {
       textDirection: TextDirection.rtl,
       controller: controller,
       obscuringCharacter: '*',
+      onTap: onTap,
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+        hintStyle: TextStyle(color: colorHint),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         hintText: hintText,
         errorText: errorText,
         hintTextDirection: TextDirection.rtl,
@@ -48,6 +57,8 @@ class TextFiledWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: Colors.red, width: 1),
         ),
+        prefixText: prificxText,
+        prefixStyle: const TextStyle(color: Colors.black26),
         prefixIcon: icon,
       ),
     );

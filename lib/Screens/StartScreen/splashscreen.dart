@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(seconds: 3),
       () {
         Navigator.pushReplacementNamed(
-            context, result == true ? '/HomeScreen' : '/SignUp_Screen');
+            context, result == true ? '/OptionStart_Screen' : '/SignUp_Screen');
       },
     );
   }

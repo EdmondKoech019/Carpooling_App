@@ -27,8 +27,7 @@ class AuthFirebase {
       return MessegeAuthFireBase(messege: 'هناك خطأ ما', error: true);
     }
 
-    return MessegeAuthFireBase(
-        messege: 'أهلا وسهلا بك في التطبيق يباشا', error: false);
+    return MessegeAuthFireBase(messege: 'أهلا  بك  بالتطبيق ', error: false);
   }
 
   MessegeAuthFireBase _controllerFirebaseException(
@@ -42,16 +41,13 @@ class AuthFirebase {
       return MessegeAuthFireBase(
           messege: 'غير مسموح بهذه العملية', error: true);
     } else if (exception.code == 'weak-password') {
-      return MessegeAuthFireBase(
-          messege: ' كلمة المرور ضعيفة يسطا', error: true);
+      return MessegeAuthFireBase(messege: ' كلمة المرور ضعيفة ', error: true);
     } else if (exception.code == 'user-disabled') {
       return MessegeAuthFireBase(messege: ' الحساب معطل', error: true);
     } else if (exception.code == 'user-not-found') {
-      return MessegeAuthFireBase(
-          messege: ' المستخدم غير موجود بكفي هبل', error: true);
+      return MessegeAuthFireBase(messege: ' المستخدم غير موجود', error: true);
     } else if (exception.code == 'wrong-password') {
-      return MessegeAuthFireBase(
-          messege: ' كلمة المرور خاظئة يسطا', error: true);
+      return MessegeAuthFireBase(messege: ' كلمة المرور خاظئة ', error: true);
     }
     return MessegeAuthFireBase(messege: 'هناك خطأ ما', error: true);
   }

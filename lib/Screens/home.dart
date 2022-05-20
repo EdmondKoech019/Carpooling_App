@@ -1,4 +1,9 @@
+import 'package:carpooling_app/Model/bottomnavigator.dart';
+import 'package:carpooling_app/Screens/NavigatorScreen/collection.dart';
+import 'package:carpooling_app/Screens/NavigatorScreen/profile.dart';
+import 'package:carpooling_app/Screens/NavigatorScreen/trip.dart';
 import 'package:flutter/material.dart';
+import 'NavigatorScreen/home.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -8,8 +13,86 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int currentIndex = 0;
+
+  final List<BtNavigator> _list = <BtNavigator>[
+    const BtNavigator(title: 'الصفحة الرئيسية', widget: Home()),
+    const BtNavigator(title: 'التواصل', widget: CollectionScreen()),
+    const BtNavigator(title: 'الرحلات', widget: Trip()),
+    const BtNavigator(title: 'الملف الشخصي', widget: ProfileScreen()),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Align(
+            child: Text(
+              _list[currentIndex].title,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            ),
+            alignment: AlignmentDirectional.bottomCenter,
+          ),
+        ),
+      ),
+      body: _list[currentIndex].widget,
+
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white60,
+        showSelectedLabels: true,
+        selectedFontSize: 14,
+        elevation: 10,
+        backgroundColor: const Color(0xffB40000),
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        onTap: (int index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
+        currentIndex: currentIndex,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home_outlined,
+                size: 30,
+              ),
+              activeIcon: Icon(Icons.home),
+              label: 'الرئيسية'),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.phone_android_outlined,
+                size: 24,
+              ),
+              activeIcon: Icon(
+                Icons.phone_android,
+                size: 30,
+              ),
+              label: 'التواصل'),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.directions_car_outlined,
+                size: 30,
+              ),
+              activeIcon: Icon(Icons.directions_car),
+              label: 'رحلاتي'),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person_outlined,
+                size: 30,
+              ),
+              activeIcon: Icon(Icons.person),
+              label: 'الملف الشخصي'),
+        ],
+      ),
+    );
   }
 }
