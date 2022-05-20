@@ -1,3 +1,6 @@
+import 'package:carpooling_app/Controller/authfirebase.dart';
+import 'package:carpooling_app/Mixin/Helper.dart';
+import 'package:carpooling_app/Model/messegeauth_firebase.dart';
 import 'package:flutter/material.dart';
 
 import '../../Widget/Button.dart';
@@ -12,23 +15,24 @@ class SignUp extends StatefulWidget {
 }
 
 late TextEditingController _nameEditingController;
-late TextEditingController _phoneEditingController;
+late TextEditingController _emailEditingController;
 late TextEditingController _passwordEditingController;
-late String? errorName;
-late String? errorPhone;
-late String? errorPassword;
+late String? errorName = null;
+
+late String? erroremail = null;
+late String? errorPassword = null;
 bool password = true;
 int _count = 0;
 int errorGender = 0;
 String? genderOption;
 
-class _SignUpState extends State<SignUp> {
+class _SignUpState extends State<SignUp> with Helper {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _nameEditingController = TextEditingController();
-    _phoneEditingController = TextEditingController();
+    _emailEditingController = TextEditingController();
     _passwordEditingController = TextEditingController();
   }
 
@@ -36,7 +40,7 @@ class _SignUpState extends State<SignUp> {
   void dispose() {
     // TODO: implement dispose
     _nameEditingController.dispose();
-    _phoneEditingController.dispose();
+    _emailEditingController.dispose();
     _passwordEditingController.dispose();
     super.dispose();
   }
@@ -68,14 +72,14 @@ class _SignUpState extends State<SignUp> {
             height: 6,
           ),
           TextFiledWidget(
-              controller: _phoneEditingController,
-              errorText: errorPhone,
-              hintText: 'رقم الموبايل',
+              controller: _emailEditingController,
+              errorText: erroremail,
+              hintText: 'البريد الالكتروني',
               icon: IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.phone_android_outlined),
+                icon: const Icon(Icons.email),
               ),
-              keyboardType: TextInputType.phone),
+              keyboardType: TextInputType.emailAddress),
           const SizedBox(
             height: 6,
           ),
@@ -196,7 +200,7 @@ class _SignUpState extends State<SignUp> {
           ),
           Button(
               onPressed: () {
-                checkTextFiledEmpty();
+                signUp();
               },
               text: 'تسجيل الحساب'),
         ],
@@ -204,12 +208,27 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  void signUp() async {
+    AuthFirebase auth = AuthFirebase();
+    if (checkTextFiledEmpty()) {
+      MessegeAuthFireBase message = await auth.authWitheEmail(
+          email: _emailEditingController.text,
+          password: _passwordEditingController.text);
+      showSnackBare(context,
+          message: message.messege, visibility: message.error);
+      if (message.error == false) {
+        Navigator.pushReplacementNamed(context, '/SignIn_Screen');
+      }
+    }
+  }
+
   bool checkTextFiledEmpty() {
     if (_nameEditingController.text.isNotEmpty &&
-        _phoneEditingController.text.isNotEmpty &&
+        _emailEditingController.text.isNotEmpty &&
         _passwordEditingController.text.isNotEmpty &&
         _count != 0) {
       errorTextFiled();
+
       return true;
     } else {
       errorTextFiled();
@@ -221,8 +240,8 @@ class _SignUpState extends State<SignUp> {
     setState(() {
       errorName =
           _nameEditingController.text.isEmpty ? 'Name field is empty' : null;
-      errorPhone =
-          _phoneEditingController.text.isEmpty ? 'Phone field is empty' : null;
+      erroremail =
+          _emailEditingController.text.isEmpty ? 'email field is empty' : null;
       errorPassword = _passwordEditingController.text.isEmpty
           ? 'Password field is empty'
           : null;
