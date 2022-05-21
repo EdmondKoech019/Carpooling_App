@@ -35,6 +35,9 @@ class _OptionsTripState extends State<OptionsTrip> {
     Number(id: '7', number: 7),
   ];
 
+  DateTime date = DateTime(2022, 5, 16);
+  String hintDate = 'تاريخ بدء الرحلة';
+
   @override
   void initState() {
     // TODO: implement initState
@@ -182,6 +185,8 @@ class _OptionsTripState extends State<OptionsTrip> {
             TextFiledWidget(
                 controller: _timeEditingController,
                 hintText: 'وقت بدء الرحلة',
+                //sufixText: sumDate,
+
                 icon: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.access_time),
@@ -193,7 +198,24 @@ class _OptionsTripState extends State<OptionsTrip> {
             ),
             TextFiledWidget(
                 controller: _DateEditingController,
-                hintText: 'تاريخ بدء الرحلة',
+                hintText: hintDate,
+                onTap: () async {
+                  DateTime? newDate = await showDatePicker(
+                      context: context,
+                      initialDate: date,
+                      firstDate: DateTime(1820),
+                      lastDate: DateTime(2100));
+
+                  if (newDate == null) return;
+                  setState(() {
+                    date = newDate;
+                    hintDate = date.day.toString() +
+                        '/' +
+                        date.month.toString() +
+                        '/' +
+                        date.year.toString();
+                  });
+                },
                 icon: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.date_range_outlined),

@@ -1,6 +1,8 @@
 import 'package:carpooling_app/Controller/Firebase/authfirebase.dart';
+import 'package:carpooling_app/Controller/Firebase/firestore.dart';
 import 'package:carpooling_app/Mixin/Helper.dart';
 import 'package:carpooling_app/Model/messegeauth_firebase.dart';
+import 'package:carpooling_app/Model/users.dart';
 import 'package:flutter/material.dart';
 
 import '../../Widget/Button.dart';
@@ -217,7 +219,8 @@ class _SignUpState extends State<SignUp> with Helper {
       showSnackBare(context,
           message: message.messege, visibility: message.error);
       if (message.error == false) {
-        Navigator.pushReplacementNamed(context, '/OptionStart_Screen');
+        create();
+        Navigator.pushReplacementNamed(context, '/SignIn_Screen');
       }
     }
   }
@@ -228,7 +231,6 @@ class _SignUpState extends State<SignUp> with Helper {
         _passwordEditingController.text.isNotEmpty &&
         _count != 0) {
       errorTextFiled();
-
       return true;
     } else {
       errorTextFiled();
@@ -248,5 +250,20 @@ class _SignUpState extends State<SignUp> with Helper {
       errorGender = _count == 0 ? 1 : 0;
       genderOption = _count == 2 ? 'Female' : 'Male';
     });
+  }
+
+  void create() {
+    FireStore fireStore = FireStore();
+    fireStore.createAcount(users: users());
+  }
+
+  Users users() {
+    Users user = Users();
+    user.name = _nameEditingController.text.toString();
+    user.email = _emailEditingController.text.toString();
+    user.phone = '000000000000';
+    user.location = '-';
+    user.gender = genderOption!;
+    return user;
   }
 }
