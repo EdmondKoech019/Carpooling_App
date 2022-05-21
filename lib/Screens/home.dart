@@ -43,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: _list[currentIndex].widget,
-
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white60,

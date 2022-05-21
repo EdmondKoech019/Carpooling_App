@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class Trip extends StatefulWidget {
   const Trip({Key? key}) : super(key: key);
 
@@ -9,6 +10,25 @@ class Trip extends StatefulWidget {
 class _TripState extends State<Trip> {
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Trip'),);
+    return ListView(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      children: [
+        Container(
+          height: 170,
+          decoration: BoxDecoration(
+            color: Colors.black26,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          margin: const EdgeInsets.symmetric(vertical: 20),
+        ),
+        Container(
+          height: 170,
+          decoration: BoxDecoration(
+            color: Colors.black26,
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ],
+    );
   }
 }
