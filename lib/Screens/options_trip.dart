@@ -148,7 +148,8 @@ class _OptionsTripState extends State<OptionsTrip> {
                 isExpanded: true,
                 items: number
                     .map(
-                      (Number number) => DropdownMenuItem<int>(
+                      (Number number) =>
+                      DropdownMenuItem<int>(
                         child: Row(
                           children: [
                             const Icon(
@@ -158,13 +159,13 @@ class _OptionsTripState extends State<OptionsTrip> {
                             ),
                             Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
+                                const EdgeInsets.symmetric(horizontal: 10),
                                 child: Text(number.number.toString())),
                           ],
                         ),
                         value: number.number,
                       ),
-                    )
+                )
                     .toList(),
                 onChanged: (int? value) {
                   if (value != null) {

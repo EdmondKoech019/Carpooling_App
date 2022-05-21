@@ -9,7 +9,6 @@ class LitTile extends StatelessWidget {
   }) : super(key: key);
   final String title;
   final String supTitle;
-
   final Widget icon;
 
   @override
