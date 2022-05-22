@@ -27,6 +27,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Visibility(
+            visible: currentIndex == 3 ? true : false,
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.drive_file_rename_outline,
+                color: Colors.blue,
+                size: 26,
+              ),
+            ),
+          ),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Padding(

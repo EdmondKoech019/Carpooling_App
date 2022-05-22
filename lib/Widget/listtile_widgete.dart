@@ -23,13 +23,7 @@ class LitTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 9),
           child: icon,
         ),
-        trailing: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.create,
-            color: Colors.blue,
-          ),
-        ),
+        
         title: Text(
           title,
           style: const TextStyle(fontSize: 16),

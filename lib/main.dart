@@ -1,6 +1,7 @@
 import 'package:carpooling_app/Screens/Auth/optionstart.dart';
 import 'package:carpooling_app/Screens/Auth/sign_in.dart';
 import 'package:carpooling_app/Screens/Auth/sign_up.dart';
+import 'package:carpooling_app/Screens/NavigatorScreen/options_trip.dart';
 import 'package:carpooling_app/Screens/StartScreen/splashscreen.dart';
 import 'package:carpooling_app/Screens/home.dart';
 import 'package:carpooling_app/Screens/map.dart';

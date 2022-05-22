@@ -3,13 +3,27 @@ import 'package:carpooling_app/Widget/Button.dart';
 import 'package:carpooling_app/Widget/textfiled.dart';
 import 'package:flutter/material.dart';
 
-class OptionsTrip extends StatefulWidget {
-  const OptionsTrip({
-    Key? key,
-  }) : super(key: key);
+class OptionTripNav extends StatefulWidget {
+  const OptionTripNav(
+      {Key? key,
+      required this.numberPassenger,
+      required this.priceTrip,
+      required this.time,
+      required this.date,
+      required this.endTrip,
+      required this.sartTrip,
+      required this.optionCar})
+      : super(key: key);
+  final String sartTrip;
+  final String endTrip;
+  final String date;
+  final String time;
+  final double priceTrip;
+  final int numberPassenger;
+  final String optionCar;
 
   @override
-  State<OptionsTrip> createState() => _OptionsTripState();
+  State<OptionTripNav> createState() => _OptionTripNavState();
 }
 
 String? errorStart;
@@ -26,7 +40,7 @@ late TextEditingController _priceEditingController;
 late TextEditingController _timeEditingController;
 late TextEditingController _DateEditingController;
 
-class _OptionsTripState extends State<OptionsTrip> {
+class _OptionTripNavState extends State<OptionTripNav> {
   List<Number> number = <Number>[
     Number(id: '1', number: 1),
     Number(id: '2', number: 2),
@@ -50,6 +64,7 @@ class _OptionsTripState extends State<OptionsTrip> {
     _priceEditingController = TextEditingController();
     _timeEditingController = TextEditingController();
     _DateEditingController = TextEditingController();
+    _startlocationEditingController.text = widget.sartTrip.toString();
   }
 
   @override
@@ -91,7 +106,7 @@ class _OptionsTripState extends State<OptionsTrip> {
                 onTap: () {
                   Navigator.pushNamed(context, '/MapScreen');
                 },
-                hintText: 'من',
+                hintText: widget.sartTrip.toString(),
                 icon: IconButton(
                   onPressed: () {
                     // TODO :  هنا سننتقل من بداية الضغطة على التيسكت فيلد الى الخريطة
@@ -112,7 +127,7 @@ class _OptionsTripState extends State<OptionsTrip> {
             ),
             TextFiledWidget(
                 controller: _endlocationEditingController,
-                hintText: 'الى',
+                hintText: widget.endTrip.toString(),
                 icon: IconButton(
                   onPressed: () {
                     // TODO : من خلال onTap هنا سننتقل من بداية الضغطة على التيسكت فيلد الى الخريطة
@@ -126,7 +141,8 @@ class _OptionsTripState extends State<OptionsTrip> {
             ),
             TextFiledWidget(
                 controller: _carEditingController,
-                hintText: 'نوع المركبة',
+                hintText: widget.optionCar.toString(),
+                // نوع المركبة
                 icon: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.directions_car_outlined),
@@ -144,9 +160,10 @@ class _OptionsTripState extends State<OptionsTrip> {
                 ),
                 borderRadius: BorderRadius.circular(8),
                 value: selectedNumber,
-                hint: const Align(
+                //الركاب
+                hint: Align(
                     alignment: AlignmentDirectional.center,
-                    child: Text('عدد الركاب في السيارة')),
+                    child: Text(widget.numberPassenger.toString())),
                 isExpanded: true,
                 items: number
                     .map(
@@ -186,7 +203,7 @@ class _OptionsTripState extends State<OptionsTrip> {
             ),
             TextFiledWidget(
                 controller: _timeEditingController,
-                hintText: 'وقت بدء الرحلة',
+                hintText: widget.time.toString(),
                 //sufixText: sumDate,
 
                 icon: IconButton(
@@ -200,7 +217,7 @@ class _OptionsTripState extends State<OptionsTrip> {
             ),
             TextFiledWidget(
                 controller: _DateEditingController,
-                hintText: hintDate,
+                hintText: hintDate = widget.date.toString(),
                 onTap: () async {
                   DateTime? newDate = await showDatePicker(
                       context: context,
@@ -230,7 +247,7 @@ class _OptionsTripState extends State<OptionsTrip> {
             TextFiledWidget(
                 controller: _priceEditingController,
                 prificxText: 'جنيه مصري',
-                hintText: 'التكلفة التقديرية',
+                hintText: widget.priceTrip.toString(),
                 icon: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.price_change),
@@ -240,7 +257,11 @@ class _OptionsTripState extends State<OptionsTrip> {
             const SizedBox(
               height: 40,
             ),
-            Button(onPressed: () {}, text: 'اضافة رحلة'),
+            Button(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                text: 'حفظ التعديل'),
             const SizedBox(
               height: 12,
             ),
