@@ -17,30 +17,18 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
 
   final List<BtNavigator> _list = <BtNavigator>[
-    const BtNavigator(title: 'الصفحة الرئيسية', widget: Home()),
-    const BtNavigator(title: 'التواصل', widget: CollectionScreen()),
-    const BtNavigator(title: 'الرحلات', widget: Trip()),
-    const BtNavigator(title: 'الملف الشخصي', widget: ProfileScreen()),
+    const BtNavigator(title: 'Home', widget: Home()),
+    const BtNavigator(title:'Collection', widget: CollectionScreen()),
+    const BtNavigator(title: 'Trips', widget: Trip()),
+    const BtNavigator(title: 'Profile', widget: ProfileScreen()),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Visibility(
-            visible: currentIndex == 3 ? true : false,
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.drive_file_rename_outline,
-                color: Colors.blue,
-                size: 26,
-              ),
-            ),
-          ),
-        ),
+
+
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Padding(

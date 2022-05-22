@@ -14,8 +14,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
+        padding: EdgeInsets.symmetric(vertical: 10),
         children: [
           Stack(
             children: [
@@ -31,12 +31,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Positioned(
                 child: CircleAvatar(
-                  radius: 20,
+                  radius: 23,
                   backgroundColor: Colors.white,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/EditProfile');
+                    },
                     icon: const Icon(
-                      Icons.photo_camera_outlined,
+                      Icons.drive_file_rename_outline,
                       color: Colors.black,
                     ),
                   ),
@@ -68,6 +70,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title: 'مدينة القاهرة _ الأهرامات',
               supTitle: 'السكن',
               icon: Icon(Icons.location_on)),
+          const LitTile(
+              title: 'Kia', supTitle: 'Care', icon: Icon(Icons.directions_car)),
         ],
       ),
     );

@@ -33,7 +33,6 @@ class TextFiledWidget extends StatelessWidget {
     return TextField(
       keyboardType: keyboardType,
       obscureText: obscureText,
-      textDirection: TextDirection.rtl,
       controller: controller,
       obscuringCharacter: '*',
       onTap: onTap,
@@ -43,7 +42,6 @@ class TextFiledWidget extends StatelessWidget {
               const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           hintText: hintText,
           errorText: errorText,
-          hintTextDirection: TextDirection.rtl,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(color: Colors.black38, width: 1),

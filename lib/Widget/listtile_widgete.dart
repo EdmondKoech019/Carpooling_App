@@ -17,21 +17,17 @@ class LitTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: ListTile(
         tileColor: Colors.white70,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        leading: Padding(
+        trailing: Padding(
           padding: const EdgeInsets.symmetric(vertical: 9),
           child: icon,
         ),
-        
         title: Text(
           title,
           style: const TextStyle(fontSize: 16),
-          textDirection: TextDirection.rtl,
         ),
-        subtitle: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Text(supTitle, textDirection: TextDirection.rtl)),
+        subtitle: Text(supTitle),
       ),
     );
   }

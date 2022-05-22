@@ -3,6 +3,7 @@ import 'package:carpooling_app/Screens/Auth/sign_in.dart';
 import 'package:carpooling_app/Screens/Auth/sign_up.dart';
 import 'package:carpooling_app/Screens/NavigatorScreen/options_trip.dart';
 import 'package:carpooling_app/Screens/StartScreen/splashscreen.dart';
+import 'package:carpooling_app/Screens/editeProfiledriver.dart';
 import 'package:carpooling_app/Screens/home.dart';
 import 'package:carpooling_app/Screens/map.dart';
 import 'package:carpooling_app/Screens/options_trip.dart';
@@ -35,6 +36,7 @@ class CarpoolingApp extends StatelessWidget {
         '/OptionStart_Screen': (context) => const OptionStart(),
         '/OptionTrip_Screen': (context) => const OptionsTrip(),
         '/MapScreen': (context) => const Map(),
+        '/EditProfile': (context) => const EditProfileDriver(),
       },
     );
   }

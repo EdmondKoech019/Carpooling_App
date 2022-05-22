@@ -264,6 +264,7 @@ class _SignUpState extends State<SignUp> with Helper {
     user.phone = '000000000000';
     user.location = '-';
     user.gender = genderOption!;
+    user.car = '_';
     return user;
   }
 }
