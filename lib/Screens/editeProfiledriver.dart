@@ -1,64 +1,61 @@
+import 'package:carpooling_app/SharedPrefrances/sherdprefrances.dart';
 import 'package:flutter/material.dart';
 
-import '../Model/numberofcar.dart';
 import '../Widget/Button.dart';
 import '../Widget/textfiled.dart';
 
 class EditProfileDriver extends StatefulWidget {
-  const EditProfileDriver({Key? key}) : super(key: key);
+  const EditProfileDriver(
+      {Key? key,
+      required this.name,
+      required this.car,
+      required this.phone,
+      required this.email,
+      required this.city})
+      : super(key: key);
+  final String name;
+  final String email;
+  final String phone;
+  final String city;
+  final String car;
 
   @override
   State<EditProfileDriver> createState() => _EditProfileDriverState();
 }
 
 String? errorName;
-String? errorEnd;
+String? errorEmail;
+String? errorMobile;
 String? errorCar;
-String? errorPrice;
-String? errorTime;
+String? errorCity;
 String? errorDate;
 int? selectedNumber;
-late TextEditingController _startlocationEditingController;
-late TextEditingController _endlocationEditingController;
+late TextEditingController _nameEditingController;
+late TextEditingController _emailEditingController;
+late TextEditingController _phoneEditingController;
+late TextEditingController _cityEditingController;
 late TextEditingController _carEditingController;
-late TextEditingController _priceEditingController;
-late TextEditingController _timeEditingController;
-late TextEditingController _DateEditingController;
-List<Number> number = <Number>[
-  Number(id: '1', number: 1),
-  Number(id: '2', number: 2),
-  Number(id: '3', number: 3),
-  Number(id: '4', number: 4),
-  Number(id: '5', number: 5),
-  Number(id: '6', number: 6),
-  Number(id: '7', number: 7),
-];
-
-DateTime date = DateTime(2022, 5, 16);
-String hintDate = 'تاريخ بدء الرحلة';
 
 @override
 class _EditProfileDriverState extends State<EditProfileDriver> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _startlocationEditingController = TextEditingController();
-    _endlocationEditingController = TextEditingController();
+    _nameEditingController = TextEditingController();
+    _emailEditingController = TextEditingController();
     _carEditingController = TextEditingController();
-    _priceEditingController = TextEditingController();
-    _timeEditingController = TextEditingController();
-    _DateEditingController = TextEditingController();
+    _cityEditingController = TextEditingController();
+    _phoneEditingController = TextEditingController();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    _startlocationEditingController.dispose();
-    _endlocationEditingController.dispose();
+    _nameEditingController.dispose();
+    _phoneEditingController.dispose();
     _carEditingController.dispose();
-    _priceEditingController.dispose();
-    _timeEditingController.dispose();
-    _DateEditingController.dispose();
+    _cityEditingController.dispose();
+    _emailEditingController.dispose();
     super.dispose();
   }
 
@@ -73,30 +70,53 @@ class _EditProfileDriverState extends State<EditProfileDriver> {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
       ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
           children: [
-            const Center(
-              child: CircleAvatar(
-                backgroundColor: Color(0xffEF9A9A),
-                radius: 80,
-                backgroundImage: AssetImage('images/khareta.jpg'),
-              ),
+            Stack(
+              children: [
+                Container(
+                  height: 200,
+                ),
+                const Center(
+                  child: CircleAvatar(
+                    backgroundColor: Color(0xffEF9A9A),
+                    radius: 80,
+                    backgroundImage: AssetImage('images/khareta.jpg'),
+                  ),
+                ),
+                Positioned(
+                  child: CircleAvatar(
+                    radius: 23,
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/EditProfile');
+                      },
+                      icon: const Icon(
+                        Icons.camera_alt,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  right: 89,
+                  bottom: 50,
+                ),
+              ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextFiledWidget(
-                controller: _startlocationEditingController,
-                hintText: 'Name',
+                controller: _nameEditingController,
+                hintText: widget.name.toString(),
+                // Name
                 icon: IconButton(
-                  onPressed: () {
-                    // TODO :  هنا سننتقل من بداية الضغطة على التيسكت فيلد الى الخريطة
-                  },
+                  onPressed: () {},
                   icon: const Icon(Icons.person),
                 ),
                 errorText: errorName,
@@ -105,27 +125,27 @@ class _EditProfileDriverState extends State<EditProfileDriver> {
               height: 10,
             ),
             TextFiledWidget(
-                controller: _endlocationEditingController,
-                hintText: 'Email',
+                controller: _emailEditingController,
+                hintText: widget.email.toString(),
+                //Email
                 icon: IconButton(
-                  onPressed: () {
-                    // TODO : من خلال onTap هنا سننتقل من بداية الضغطة على التيسكت فيلد الى الخريطة
-                  },
+                  onPressed: () {},
                   icon: const Icon(Icons.email),
                 ),
-                errorText: errorEnd,
+                errorText: errorEmail,
                 keyboardType: TextInputType.emailAddress),
             const SizedBox(
               height: 8,
             ),
             TextFiledWidget(
-                controller: _carEditingController,
-                hintText: 'Mobile',
+                controller: _phoneEditingController,
+                hintText: widget.phone.toString(),
+                //Mobile
                 icon: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.phone_android),
                 ),
-                errorText: errorCar,
+                errorText: errorMobile,
                 keyboardType: TextInputType.phone),
             const SizedBox(
               height: 8,
@@ -134,15 +154,14 @@ class _EditProfileDriverState extends State<EditProfileDriver> {
               height: 8,
             ),
             TextFiledWidget(
-                controller: _timeEditingController,
-                hintText: 'City',
-                //sufixText: sumDate,
-
+                controller: _cityEditingController,
+                hintText: widget.city.toString(),
+                // City
                 icon: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.location_on),
                 ),
-                errorText: errorTime,
+                errorText: errorCity,
                 keyboardType: TextInputType.text),
             const SizedBox(
               height: 8,
@@ -151,18 +170,29 @@ class _EditProfileDriverState extends State<EditProfileDriver> {
               height: 8,
             ),
             TextFiledWidget(
-                controller: _priceEditingController,
-                hintText: 'Kia',
+                controller: _carEditingController,
+                hintText: widget.car.toString(),
+                //Car
                 icon: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.directions_car),
                 ),
-                errorText: errorPrice,
+                errorText: errorCar,
                 keyboardType: TextInputType.text),
             const SizedBox(
               height: 40,
             ),
-            Button(onPressed: () {}, text: 'Update'),
+            Button(
+                onPressed: () {
+                  // TODO UPDATE EDIT PROFILE
+
+                  ShController().saveInformation(
+                      phone: _phoneEditingController.text.toString(),
+                      car: _carEditingController.text.toString(),
+                      city: _cityEditingController.text.toString(),
+                      name: _nameEditingController.text.toString());
+                },
+                text: 'Update'),
             const SizedBox(
               height: 12,
             ),

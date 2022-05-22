@@ -1,3 +1,7 @@
+import 'package:carpooling_app/Model/users.dart';
+import 'package:carpooling_app/Screens/editeProfiledriver.dart';
+import 'package:carpooling_app/SharedPrefrances/sherdprefrances.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../Widget/listtile_widgete.dart';
@@ -9,13 +13,31 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
+Users informationDriver = Users();
+late String name;
+late String phone;
+late String email;
+late String city;
+late String car;
+
 class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    name = ShController().returnName.toString();
+    phone = ShController().returnPhone.toString();
+    email = ShController().printemail.toString();
+    city = ShController().returnCity.toString();
+    car = ShController().returnCar.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: ListView(
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         children: [
           Stack(
             children: [
@@ -35,7 +57,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   backgroundColor: Colors.white,
                   child: IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/EditProfile');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfileDriver(
+                              name: name,
+                              car: car,
+                              phone: phone,
+                              email: email,
+                              city: city),
+                        ),
+                      );
                     },
                     icon: const Icon(
                       Icons.drive_file_rename_outline,
@@ -54,24 +86,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(
             height: 10,
           ),
-          const LitTile(
-              title: 'أحمد أبو زيد',
-              supTitle: 'سائق',
-              icon: Icon(Icons.person)),
-          const LitTile(
-              title: 'res2312000@gmail.com',
-              supTitle: 'الايميل',
-              icon: Icon(Icons.email)),
-          const LitTile(
-              title: '+972567390091',
-              supTitle: 'رقم الموبايل',
-              icon: Icon(Icons.phone_android)),
-          const LitTile(
-              title: 'مدينة القاهرة _ الأهرامات',
-              supTitle: 'السكن',
-              icon: Icon(Icons.location_on)),
-          const LitTile(
-              title: 'Kia', supTitle: 'Care', icon: Icon(Icons.directions_car)),
+          LitTile(title: name, supTitle: 'سائق', icon: Icon(Icons.person)),
+          LitTile(
+              title: email, supTitle: 'Email', icon: const Icon(Icons.email)),
+          LitTile(
+              title: phone,
+              supTitle: 'Mobile',
+              icon: const Icon(Icons.phone_android)),
+          LitTile(
+              title: city,
+              supTitle: 'City',
+              icon: const Icon(Icons.location_on)),
+          LitTile(
+              title: car,
+              supTitle: 'Care',
+              icon: const Icon(Icons.directions_car)),
         ],
       ),
     );

@@ -14,7 +14,7 @@ class Users {
     location = map['location'];
     email = map['email'];
     gender = map['gender'];
-    car= map['Car'];
+    car = map['Car'];
   }
 
   Map<String, dynamic> toMap() {

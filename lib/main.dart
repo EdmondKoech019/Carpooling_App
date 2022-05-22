@@ -36,7 +36,7 @@ class CarpoolingApp extends StatelessWidget {
         '/OptionStart_Screen': (context) => const OptionStart(),
         '/OptionTrip_Screen': (context) => const OptionsTrip(),
         '/MapScreen': (context) => const Map(),
-        '/EditProfile': (context) => const EditProfileDriver(),
+
       },
     );
   }

@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum Keys { email, login }
+enum Keys { email, login, name, phone, car, city }
 
 class ShController {
   late SharedPreferences _sharedPreferences;
@@ -9,7 +9,6 @@ class ShController {
 
   factory ShController() {
     return _instance;
-
   }
 
   ShController._();
@@ -23,6 +22,32 @@ class ShController {
     await _sharedPreferences.setBool(Keys.login.toString(), true);
   }
 
+  Future<void> saveInformation(
+      {required String phone,
+      required String car,
+      required String city,
+      required String name}) async {
+    await _sharedPreferences.setString(Keys.phone.toString(), phone);
+    await _sharedPreferences.setString(Keys.car.toString(), car);
+    await _sharedPreferences.setString(Keys.city.toString(), city);
+    await _sharedPreferences.setString(Keys.name.toString(), name);
+  }
+
   bool get resultSave =>
       _sharedPreferences.getBool(Keys.login.toString()) ?? false;
+
+  String get printemail =>
+      _sharedPreferences.getString(Keys.email.toString()) ?? 'dsd@gmail.com';
+
+  String get returnName =>
+      _sharedPreferences.getString(Keys.name.toString()) ?? 'Driver';
+
+  String get returnPhone =>
+      _sharedPreferences.getString(Keys.phone.toString()) ?? '-------';
+
+  String get returnCar =>
+      _sharedPreferences.getString(Keys.car.toString()) ?? '-------';
+
+  String get returnCity =>
+      _sharedPreferences.getString(Keys.city.toString()) ?? '-------';
 }
