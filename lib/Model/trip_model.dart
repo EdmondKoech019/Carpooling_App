@@ -6,7 +6,8 @@ class TripModel {
   late int condition;
   late String priceTrip;
   late String numberPassenger;
-  late String optionCare;
+  late String car;
+
 
   // TripModel(
   //     {required this.startTrip,
@@ -26,6 +27,7 @@ class TripModel {
     time = map['time'];
     condition = map['condition'];
     priceTrip = map['priceTrip'];
+    car = map['car'];
     numberPassenger = map['numberPassenger'];
   }
 
@@ -38,6 +40,7 @@ class TripModel {
     map['condition'] = condition;
     map['priceTrip'] = priceTrip;
     map['numberPassenger'] = numberPassenger;
+    map['car'] = car;
 
     return map;
   }

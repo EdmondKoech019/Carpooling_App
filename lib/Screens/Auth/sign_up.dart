@@ -3,6 +3,7 @@ import 'package:carpooling_app/Controller/Firebase/firestore.dart';
 import 'package:carpooling_app/Mixin/Helper.dart';
 import 'package:carpooling_app/Model/messegeauth_firebase.dart';
 import 'package:carpooling_app/Model/users.dart';
+import 'package:carpooling_app/SharedPrefrances/sherdprefrances.dart';
 import 'package:flutter/material.dart';
 
 import '../../Widget/Button.dart';
@@ -26,7 +27,7 @@ late String? errorPassword = null;
 bool password = true;
 int _count = 0;
 int errorGender = 0;
-late String genderOption;
+late String genderOption = 'Male';
 
 class _SignUpState extends State<SignUp> with Helper {
   @override
@@ -219,7 +220,10 @@ class _SignUpState extends State<SignUp> with Helper {
       showSnackBare(context,
           message: message.messege, visibility: message.error);
       if (message.error == false) {
-        create();
+        bool result = await create();
+        if (result) {
+          saveInformationDriver();
+        }
         Navigator.pushReplacementNamed(context, '/SignIn_Screen');
       }
     }
@@ -252,9 +256,9 @@ class _SignUpState extends State<SignUp> with Helper {
     });
   }
 
-  void create() {
+  Future<bool> create() async {
     FireStore fireStore = FireStore();
-    fireStore.createAcount(users: users());
+    return await fireStore.createAcount(users: users());
   }
 
   Users users() {
@@ -266,5 +270,14 @@ class _SignUpState extends State<SignUp> with Helper {
     user.gender = genderOption;
     user.car = '_';
     return user;
+  }
+
+  void saveInformationDriver() {
+    ShController().saveInformation(
+        phone: '000000000',
+        car: '-',
+        city: '-',
+        name: _nameEditingController.text.toString(),
+        gender: genderOption.toString());
   }
 }

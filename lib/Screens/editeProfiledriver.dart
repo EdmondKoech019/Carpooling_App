@@ -1,4 +1,5 @@
 import 'package:carpooling_app/Controller/Firebase/firestore.dart';
+import 'package:carpooling_app/Mixin/Helper.dart';
 import 'package:carpooling_app/SharedPrefrances/sherdprefrances.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +10,12 @@ import '../Widget/textfiled.dart';
 import 'Auth/sign_up.dart';
 
 class EditProfileDriver extends StatefulWidget {
-  const EditProfileDriver(
-      {Key? key,
-      required this.name,
-      required this.car,
-      required this.phone,
-      required this.email,
-      required this.city})
+  const EditProfileDriver({Key? key,
+    required this.name,
+    required this.car,
+    required this.phone,
+    required this.email,
+    required this.city})
       : super(key: key);
   final String name;
   final String email;
@@ -41,7 +41,7 @@ late TextEditingController _cityEditingController;
 late TextEditingController _carEditingController;
 
 @override
-class _EditProfileDriverState extends State<EditProfileDriver> {
+class _EditProfileDriverState extends State<EditProfileDriver> with Helper {
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -122,7 +122,7 @@ class _EditProfileDriverState extends State<EditProfileDriver> {
             ),
             TextFiledWidget(
                 controller: _nameEditingController,
-                hintText: widget.name.isEmpty?'Driver':'Name',
+                hintText: widget.name.isEmpty ? 'Driver' : 'Name',
                 // Name
                 icon: IconButton(
                   onPressed: () {},
@@ -217,9 +217,18 @@ class _EditProfileDriverState extends State<EditProfileDriver> {
     );
   }
 
-  void updateProfile() {
+  void updateProfile() async {
     FireStore fireStore = FireStore();
-    fireStore.updateDataDriver(users: users());
+    bool result = await fireStore.updateDataDriver(users: users());
+    if (result) {
+      showSnackBare(context, message: 'Edit succeeded', visibility: !result);
+      saveShPref();
+      Navigator.pop(context);
+    } else if (result == false) {
+      showSnackBare(context,
+          message: 'Something went wrong, maybe the Internet',
+          visibility: !result);
+    }
   }
 
   Users users() {
@@ -232,5 +241,14 @@ class _EditProfileDriverState extends State<EditProfileDriver> {
     user.car = _carEditingController.text.toString();
 
     return user;
+  }
+
+  void saveShPref() async {
+   await ShController().saveInformation(
+        phone: _phoneEditingController.text.toString(),
+        car: _carEditingController.text.toString(),
+        city: _cityEditingController.text.toString(),
+        name: _nameEditingController.text.toString(),
+        gender: ShController().returnGender.toString());
   }
 }

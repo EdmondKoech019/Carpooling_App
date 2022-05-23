@@ -26,7 +26,7 @@ class FireStore {
   }
 
   Future<bool> updateTripDriver(
-      {required TripModel tripModel, String? path}) async {
+      {required TripModel tripModel, required String path}) async {
     return await _instance
         .collection('Users')
         .doc(auth.currentUser?.uid)
@@ -57,5 +57,27 @@ class FireStore {
                 TripModel.fromMap(snapshot.data()!),
             toFirestore: (TripModel tripModel, options) => TripModel().toMap())
         .snapshots();
+  }
+
+  Stream<DocumentSnapshot<Users>> readDriver() async* {
+    yield*_instance
+        .collection('Users')
+        .doc(auth.currentUser!.uid)
+        .withConverter<Users>(
+            fromFirestore: (snapshot, options) =>
+                Users.fromMap(snapshot.data()!),
+            toFirestore: (Users users, options) => users.toMap())
+        .snapshots();
+  }
+
+  Future<bool> deleteTripDriver({required String id}) async {
+    return await _instance
+        .collection('Users')
+        .doc(auth.currentUser?.uid)
+        .collection('Trip')
+        .doc(id)
+        .delete()
+        .then((value) => true)
+        .catchError((error) => false);
   }
 }

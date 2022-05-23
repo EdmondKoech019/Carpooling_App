@@ -1,6 +1,7 @@
 import 'package:carpooling_app/Controller/Firebase/firestore.dart';
 import 'package:carpooling_app/Model/numberofcar.dart';
 import 'package:carpooling_app/Model/trip_model.dart';
+import 'package:carpooling_app/SharedPrefrances/sherdprefrances.dart';
 import 'package:carpooling_app/Widget/Button.dart';
 import 'package:carpooling_app/Widget/textfiled.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class _OptionsTripState extends State<OptionsTrip> {
   ];
 
   DateTime date = DateTime(2022, 5, 16);
-  String ?date2;
+  String? date2;
   String hintDate = 'تاريخ بدء الرحلة';
 
   @override
@@ -53,6 +54,7 @@ class _OptionsTripState extends State<OptionsTrip> {
     _priceEditingController = TextEditingController();
     _timeEditingController = TextEditingController();
     _DateEditingController = TextEditingController();
+    _carEditingController.text = ShController().returnCar.toString();
   }
 
   @override
@@ -268,7 +270,7 @@ class _OptionsTripState extends State<OptionsTrip> {
 
     tripModel.startTrip = _startlocationEditingController.text.toString();
     tripModel.endTrip = _endlocationEditingController.text.toString();
-    tripModel.optionCare = _carEditingController.text.toString();
+    tripModel.car = _carEditingController.text.toString();
     tripModel.numberPassenger = selectedNumber.toString();
     tripModel.time = _timeEditingController.text.toString();
     tripModel.date = hintDate.toString();

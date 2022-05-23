@@ -1,4 +1,5 @@
 import 'package:carpooling_app/Controller/Firebase/firestore.dart';
+import 'package:carpooling_app/Mixin/Helper.dart';
 import 'package:carpooling_app/Model/numberofcar.dart';
 import 'package:carpooling_app/Model/trip_model.dart';
 import 'package:carpooling_app/Widget/Button.dart';
@@ -6,21 +7,25 @@ import 'package:carpooling_app/Widget/textfiled.dart';
 import 'package:flutter/material.dart';
 
 class OptionTripNav extends StatefulWidget {
-  const OptionTripNav({
-    Key? key,
-    required this.numberPassenger,
-    required this.priceTrip,
-    required this.time,
-    required this.date,
-    required this.endTrip,
-    required this.sartTrip,
-  }) : super(key: key);
+  const OptionTripNav(
+      {Key? key,
+      required this.numberPassenger,
+      required this.priceTrip,
+      required this.time,
+      required this.date,
+      required this.endTrip,
+      required this.sartTrip,
+      required this.id,
+      required this.car})
+      : super(key: key);
   final String sartTrip;
   final String endTrip;
   final String date;
   final String time;
   final String priceTrip;
   final String numberPassenger;
+  final String id;
+  final String car;
 
   @override
   State<OptionTripNav> createState() => _OptionTripNavState();
@@ -40,7 +45,7 @@ late TextEditingController _priceEditingController;
 late TextEditingController _timeEditingController;
 late TextEditingController _DateEditingController;
 
-class _OptionTripNavState extends State<OptionTripNav> {
+class _OptionTripNavState extends State<OptionTripNav> with Helper {
   List<Number> number = <Number>[
     Number(id: '1', number: 1),
     Number(id: '2', number: 2),
@@ -64,6 +69,14 @@ class _OptionTripNavState extends State<OptionTripNav> {
     _priceEditingController = TextEditingController();
     _timeEditingController = TextEditingController();
     _DateEditingController = TextEditingController();
+
+    _startlocationEditingController.text = widget.sartTrip.toString();
+    _endlocationEditingController.text = widget.endTrip.toString();
+    _carEditingController.text = widget.car.toString();
+    _startlocationEditingController.text = widget.sartTrip.toString();
+    _timeEditingController.text = widget.time.toString();
+    _DateEditingController.text = widget.date.toString();
+    _priceEditingController.text = widget.priceTrip.toString();
   }
 
   @override
@@ -140,7 +153,7 @@ class _OptionTripNavState extends State<OptionTripNav> {
             ),
             TextFiledWidget(
                 controller: _carEditingController,
-                hintText: 'widget.optionCar.toString()',
+                hintText: 'dd',
                 // نوع المركبة
                 icon: IconButton(
                   onPressed: () {},
@@ -202,7 +215,7 @@ class _OptionTripNavState extends State<OptionTripNav> {
             ),
             TextFiledWidget(
                 controller: _timeEditingController,
-                hintText: widget.time.toString(),
+                hintText: '',
                 //sufixText: sumDate,
 
                 icon: IconButton(
@@ -227,7 +240,7 @@ class _OptionTripNavState extends State<OptionTripNav> {
                   if (newDate == null) return;
                   setState(() {
                     date = newDate;
-                    hintDate = date.day.toString() +
+                    _DateEditingController.text = date.day.toString() +
                         '/' +
                         date.month.toString() +
                         '/' +
@@ -258,7 +271,7 @@ class _OptionTripNavState extends State<OptionTripNav> {
             ),
             Button(
                 onPressed: () {
-                  FireStore().updateTripDriver(tripModel: _tripModel());
+                  update();
                 },
                 text: 'حفظ التعديل'),
             const SizedBox(
@@ -284,8 +297,17 @@ class _OptionTripNavState extends State<OptionTripNav> {
     tripModel.date = _DateEditingController.text.toString();
     tripModel.numberPassenger = selectedNumber.toString();
     tripModel.priceTrip = _priceEditingController.text.toString();
-    tripModel.optionCare = _carEditingController.text.toString();
-
+    tripModel.car = _carEditingController.text.toString();
+    tripModel.condition = 0;
     return tripModel;
+  }
+
+  void update() async {
+    bool result = await FireStore()
+        .updateTripDriver(tripModel: _tripModel(), path: widget.id.toString());
+    if (result) {
+      showSnackBare(context, message: 'Edit succeeded', visibility: !result);
+      Navigator.pop(context);
+    }
   }
 }

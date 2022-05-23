@@ -23,7 +23,6 @@ class _TripState extends State<Trip> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   @override
@@ -89,7 +88,8 @@ class _TripState extends State<Trip> {
                         textDirection: TextDirection.ltr,
                         children: [
                           Text(
-                            snapshot.data!.docs[index].data().condition == condition
+                            snapshot.data!.docs[index].data().condition ==
+                                    condition
                                 ? 'قيد التنفيذ'
                                 : snapshot.data!.docs[index].data().condition ==
                                         condition
@@ -140,7 +140,10 @@ class _TripState extends State<Trip> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await FireStore().deleteTripDriver(
+                              id: snapshot.data!.docs[index].id);
+                        },
                         icon: const Icon(
                           Icons.delete_outline,
                           color: Colors.white,
@@ -163,6 +166,8 @@ class _TripState extends State<Trip> {
                                 date: snapshot.data!.docs[index].data().date,
                                 priceTrip:
                                     snapshot.data!.docs[index].data().priceTrip,
+                                id: snapshot.data!.docs[index].id,
+                                car: snapshot.data!.docs[index].data().car,
                               ),
                             ),
                           );
@@ -198,6 +203,4 @@ class _TripState extends State<Trip> {
       stream: FireStore().readTripDriver(),
     );
   }
-
-
 }

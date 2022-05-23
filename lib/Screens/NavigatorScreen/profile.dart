@@ -37,81 +37,94 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
-
-      // child: StreamBuilder<QuerySnapshot<Users>>(
-      //   builder: (context, snapshot) {
-      //     if (snapshot.connectionState == ConnectionState.waiting) {
-      //       return const Center(
-      //         child: CircularProgressIndicator(),
-      //       );
-      //     } else if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
-
-      child: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        children: [
-          Stack(
-            children: [
-              Container(
-                height: 200,
-              ),
-              const Center(
-                child: CircleAvatar(
-                  backgroundColor: Color(0xffEF9A9A),
-                  radius: 80,
-                  backgroundImage: AssetImage('images/khareta.jpg'),
-                ),
-              ),
-              Positioned(
-                child: CircleAvatar(
-                  radius: 23,
-                  backgroundColor: Colors.white,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditProfileDriver(
-                              name: name,
-                              car: car,
-                              phone: phone,
-                              email: email,
-                              city: city),
-                        ),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.drive_file_rename_outline,
-                      color: Colors.black,
+      child: StreamBuilder<DocumentSnapshot<Users>>(
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasData) {
+            return ListView(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      height: 200,
                     ),
-                  ),
+                    const Center(
+                      child: CircleAvatar(
+                        backgroundColor: Color(0xffEF9A9A),
+                        radius: 80,
+                        backgroundImage: AssetImage('images/khareta.jpg'),
+                      ),
+                    ),
+                    Positioned(
+                      child: CircleAvatar(
+                        radius: 23,
+                        backgroundColor: Colors.white,
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditProfileDriver(
+                                    name: snapshot.data!.data()!.name,
+                                    car: snapshot.data!.data()!.car,
+                                    phone: snapshot.data!.data()!.phone,
+                                    email: snapshot.data!.data()!.email,
+                                    city: snapshot.data!.data()!.location
+
+
+                                ),
+                              ),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.drive_file_rename_outline,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      right: 89,
+                      bottom: 50,
+                    ),
+                  ],
                 ),
-                right: 89,
-                bottom: 50,
-              ),
-            ],
-          ),
-          const Divider(
-            color: Colors.red,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          LitTile(title: name, supTitle: 'سائق', icon: Icon(Icons.person)),
-          LitTile(
-              title: email, supTitle: 'Email', icon: const Icon(Icons.email)),
-          LitTile(
-              title: phone,
-              supTitle: 'Mobile',
-              icon: const Icon(Icons.phone_android)),
-          LitTile(
-              title: city,
-              supTitle: 'City',
-              icon: const Icon(Icons.location_on)),
-          LitTile(
-              title: car,
-              supTitle: 'Care',
-              icon: const Icon(Icons.directions_car)),
-        ],
+                const Divider(
+                  color: Colors.red,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                LitTile(
+                    title: snapshot.data!.data()!.name.toString(),
+                    supTitle: 'سائق',
+                    icon: Icon(Icons.person)),
+                LitTile(
+                    title: snapshot.data!.data()!.email,
+                    supTitle: 'Email',
+                    icon: const Icon(Icons.email)),
+                LitTile(
+                    title: snapshot.data!.data()!.phone,
+                    supTitle: 'Mobile',
+                    icon: const Icon(Icons.phone_android)),
+                LitTile(
+                    title: snapshot.data!.data()!.location,
+                    supTitle: 'City',
+                    icon: const Icon(Icons.location_on)),
+                LitTile(
+                    title: snapshot.data!.data()!.car,
+                    supTitle: 'Care',
+                    icon: const Icon(Icons.directions_car)),
+              ],
+            );
+          }
+          return const Center(
+            child: Text('error'),
+          );
+        },
+        stream: FireStore().readDriver(),
       ),
     );
   }
