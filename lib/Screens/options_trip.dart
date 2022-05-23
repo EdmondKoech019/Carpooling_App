@@ -1,4 +1,6 @@
+import 'package:carpooling_app/Controller/Firebase/firestore.dart';
 import 'package:carpooling_app/Model/numberofcar.dart';
+import 'package:carpooling_app/Model/trip_model.dart';
 import 'package:carpooling_app/Widget/Button.dart';
 import 'package:carpooling_app/Widget/textfiled.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +40,7 @@ class _OptionsTripState extends State<OptionsTrip> {
   ];
 
   DateTime date = DateTime(2022, 5, 16);
+  String ?date2;
   String hintDate = 'تاريخ بدء الرحلة';
 
   @override
@@ -240,7 +243,12 @@ class _OptionsTripState extends State<OptionsTrip> {
             const SizedBox(
               height: 40,
             ),
-            Button(onPressed: () {}, text: 'اضافة رحلة'),
+            Button(
+                onPressed: () {
+                  addTrip();
+                  Navigator.pop(context);
+                },
+                text: 'ADD TRIP'),
             const SizedBox(
               height: 12,
             ),
@@ -253,5 +261,24 @@ class _OptionsTripState extends State<OptionsTrip> {
         ),
       ),
     );
+  }
+
+  TripModel tripModel() {
+    TripModel tripModel = TripModel();
+
+    tripModel.startTrip = _startlocationEditingController.text.toString();
+    tripModel.endTrip = _endlocationEditingController.text.toString();
+    tripModel.optionCare = _carEditingController.text.toString();
+    tripModel.numberPassenger = selectedNumber.toString();
+    tripModel.time = _timeEditingController.text.toString();
+    tripModel.date = hintDate.toString();
+    tripModel.priceTrip = _priceEditingController.text.toString();
+    tripModel.condition = 0;
+    return tripModel;
+  }
+
+  void addTrip() async {
+    FireStore fireStore = FireStore();
+    await fireStore.addTripDriver(tripModel: tripModel());
   }
 }

@@ -1,8 +1,12 @@
+import 'package:carpooling_app/Controller/Firebase/firestore.dart';
 import 'package:carpooling_app/SharedPrefrances/sherdprefrances.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../Model/users.dart';
 import '../Widget/Button.dart';
 import '../Widget/textfiled.dart';
+import 'Auth/sign_up.dart';
 
 class EditProfileDriver extends StatefulWidget {
   const EditProfileDriver(
@@ -46,6 +50,11 @@ class _EditProfileDriverState extends State<EditProfileDriver> {
     _carEditingController = TextEditingController();
     _cityEditingController = TextEditingController();
     _phoneEditingController = TextEditingController();
+    _nameEditingController.text = widget.name.toString();
+    _emailEditingController.text = widget.email.toString();
+    _phoneEditingController.text = widget.phone.toString();
+    _carEditingController.text = widget.car.toString();
+    _cityEditingController.text = widget.city.toString();
   }
 
   @override
@@ -113,7 +122,7 @@ class _EditProfileDriverState extends State<EditProfileDriver> {
             ),
             TextFiledWidget(
                 controller: _nameEditingController,
-                hintText: widget.name.toString(),
+                hintText: widget.name.isEmpty?'Driver':'Name',
                 // Name
                 icon: IconButton(
                   onPressed: () {},
@@ -185,12 +194,13 @@ class _EditProfileDriverState extends State<EditProfileDriver> {
             Button(
                 onPressed: () {
                   // TODO UPDATE EDIT PROFILE
-
-                  ShController().saveInformation(
-                      phone: _phoneEditingController.text.toString(),
-                      car: _carEditingController.text.toString(),
-                      city: _cityEditingController.text.toString(),
-                      name: _nameEditingController.text.toString());
+                  updateProfile();
+                  // ShController().saveInformation(
+                  //     phone: _phoneEditingController.text.toString(),
+                  //     car: _carEditingController.text.toString(),
+                  //     city: _cityEditingController.text.toString(),
+                  //     name: _nameEditingController.text.toString(),
+                  //     gender: ShController().returnGender.toString());
                 },
                 text: 'Update'),
             const SizedBox(
@@ -205,5 +215,22 @@ class _EditProfileDriverState extends State<EditProfileDriver> {
         ),
       ),
     );
+  }
+
+  void updateProfile() {
+    FireStore fireStore = FireStore();
+    fireStore.updateDataDriver(users: users());
+  }
+
+  Users users() {
+    Users user = Users();
+    user.name = _nameEditingController.text.toString();
+    user.email = _emailEditingController.text.toString();
+    user.phone = _phoneEditingController.text.toString();
+    user.location = _cityEditingController.text.toString();
+    user.gender = ShController().returnGender.toString();
+    user.car = _carEditingController.text.toString();
+
+    return user;
   }
 }

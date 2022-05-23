@@ -26,7 +26,7 @@ late String? errorPassword = null;
 bool password = true;
 int _count = 0;
 int errorGender = 0;
-String? genderOption;
+late String genderOption;
 
 class _SignUpState extends State<SignUp> with Helper {
   @override
@@ -62,7 +62,7 @@ class _SignUpState extends State<SignUp> with Helper {
             height: 10,
           ),
           TextFiledWidget(
-              hintText: 'الاسم',
+              hintText: 'Name',
               errorText: errorName,
               controller: _nameEditingController,
               icon: IconButton(
@@ -76,7 +76,7 @@ class _SignUpState extends State<SignUp> with Helper {
           TextFiledWidget(
               controller: _emailEditingController,
               errorText: erroremail,
-              hintText: 'البريد الالكتروني',
+              hintText: 'Email',
               icon: IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.email),
@@ -88,7 +88,7 @@ class _SignUpState extends State<SignUp> with Helper {
           TextFiledWidget(
             controller: _passwordEditingController,
             errorText: errorPassword,
-            hintText: 'كلمة المرور',
+            hintText: 'Password',
             keyboardType: TextInputType.text,
             icon: IconButton(
                 onPressed: () {
@@ -204,7 +204,7 @@ class _SignUpState extends State<SignUp> with Helper {
               onPressed: () {
                 signUp();
               },
-              text: 'تسجيل الحساب'),
+              text: 'SignUp'),
         ],
       ),
     );
@@ -263,7 +263,7 @@ class _SignUpState extends State<SignUp> with Helper {
     user.email = _emailEditingController.text.toString();
     user.phone = '000000000000';
     user.location = '-';
-    user.gender = genderOption!;
+    user.gender = genderOption;
     user.car = '_';
     return user;
   }

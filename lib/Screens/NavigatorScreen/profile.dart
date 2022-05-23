@@ -1,6 +1,8 @@
+import 'package:carpooling_app/Controller/Firebase/firestore.dart';
 import 'package:carpooling_app/Model/users.dart';
 import 'package:carpooling_app/Screens/editeProfiledriver.dart';
 import 'package:carpooling_app/SharedPrefrances/sherdprefrances.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +15,6 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-Users informationDriver = Users();
 late String name;
 late String phone;
 late String email;
@@ -25,17 +26,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    name = ShController().returnName.toString();
-    phone = ShController().returnPhone.toString();
-    email = ShController().printemail.toString();
-    city = ShController().returnCity.toString();
-    car = ShController().returnCar.toString();
+    name = ShController().returnName;
+    phone = ShController().returnPhone;
+    email = ShController().printemail;
+    city = ShController().returnCity;
+    car = ShController().returnCar;
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
+
+      // child: StreamBuilder<QuerySnapshot<Users>>(
+      //   builder: (context, snapshot) {
+      //     if (snapshot.connectionState == ConnectionState.waiting) {
+      //       return const Center(
+      //         child: CircularProgressIndicator(),
+      //       );
+      //     } else if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+
       child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 10),
         children: [

@@ -1,26 +1,26 @@
+import 'package:carpooling_app/Controller/Firebase/firestore.dart';
 import 'package:carpooling_app/Model/numberofcar.dart';
+import 'package:carpooling_app/Model/trip_model.dart';
 import 'package:carpooling_app/Widget/Button.dart';
 import 'package:carpooling_app/Widget/textfiled.dart';
 import 'package:flutter/material.dart';
 
 class OptionTripNav extends StatefulWidget {
-  const OptionTripNav(
-      {Key? key,
-      required this.numberPassenger,
-      required this.priceTrip,
-      required this.time,
-      required this.date,
-      required this.endTrip,
-      required this.sartTrip,
-      required this.optionCar})
-      : super(key: key);
+  const OptionTripNav({
+    Key? key,
+    required this.numberPassenger,
+    required this.priceTrip,
+    required this.time,
+    required this.date,
+    required this.endTrip,
+    required this.sartTrip,
+  }) : super(key: key);
   final String sartTrip;
   final String endTrip;
   final String date;
   final String time;
-  final double priceTrip;
-  final int numberPassenger;
-  final String optionCar;
+  final String priceTrip;
+  final String numberPassenger;
 
   @override
   State<OptionTripNav> createState() => _OptionTripNavState();
@@ -64,7 +64,6 @@ class _OptionTripNavState extends State<OptionTripNav> {
     _priceEditingController = TextEditingController();
     _timeEditingController = TextEditingController();
     _DateEditingController = TextEditingController();
-    _startlocationEditingController.text = widget.sartTrip.toString();
   }
 
   @override
@@ -141,7 +140,7 @@ class _OptionTripNavState extends State<OptionTripNav> {
             ),
             TextFiledWidget(
                 controller: _carEditingController,
-                hintText: widget.optionCar.toString(),
+                hintText: 'widget.optionCar.toString()',
                 // نوع المركبة
                 icon: IconButton(
                   onPressed: () {},
@@ -259,7 +258,7 @@ class _OptionTripNavState extends State<OptionTripNav> {
             ),
             Button(
                 onPressed: () {
-                  Navigator.pop(context);
+                  FireStore().updateTripDriver(tripModel: _tripModel());
                 },
                 text: 'حفظ التعديل'),
             const SizedBox(
@@ -274,5 +273,19 @@ class _OptionTripNavState extends State<OptionTripNav> {
         ),
       ),
     );
+  }
+
+  TripModel _tripModel() {
+    TripModel tripModel = TripModel();
+
+    tripModel.startTrip = _startlocationEditingController.text.toString();
+    tripModel.endTrip = _endlocationEditingController.text.toString();
+    tripModel.time = _timeEditingController.text.toString();
+    tripModel.date = _DateEditingController.text.toString();
+    tripModel.numberPassenger = selectedNumber.toString();
+    tripModel.priceTrip = _priceEditingController.text.toString();
+    tripModel.optionCare = _carEditingController.text.toString();
+
+    return tripModel;
   }
 }

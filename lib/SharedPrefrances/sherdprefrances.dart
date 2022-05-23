@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum Keys { email, login, name, phone, car, city }
+enum Keys { email, login, name, phone, car, city, gender }
 
 class ShController {
   late SharedPreferences _sharedPreferences;
@@ -26,11 +26,13 @@ class ShController {
       {required String phone,
       required String car,
       required String city,
-      required String name}) async {
+      required String name,
+      required String gender}) async {
     await _sharedPreferences.setString(Keys.phone.toString(), phone);
     await _sharedPreferences.setString(Keys.car.toString(), car);
     await _sharedPreferences.setString(Keys.city.toString(), city);
     await _sharedPreferences.setString(Keys.name.toString(), name);
+    await _sharedPreferences.setString(Keys.gender.toString(), gender);
   }
 
   bool get resultSave =>
@@ -50,4 +52,7 @@ class ShController {
 
   String get returnCity =>
       _sharedPreferences.getString(Keys.city.toString()) ?? '-------';
+
+  String get returnGender =>
+      _sharedPreferences.getString(Keys.gender.toString()) ?? '-------';
 }

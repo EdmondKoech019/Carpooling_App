@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const <Widget>[
           Icon(Icons.home, color: Colors.white, size: 26),
           Icon(Icons.phone_android, color: Colors.white, size: 26),
-          Icon(Icons.directions_car, color: Colors.white, size: 26),
+           Icon(Icons.directions_car, color: Colors.white, size: 26),
           Icon(Icons.person, color: Colors.white, size: 26),
         ],
         onTap: (int index) {
